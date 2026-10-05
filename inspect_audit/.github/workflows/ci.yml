@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: install
+        run: |
+          uv venv
+          uv pip install -e ".[dev]"
+      - name: lint
+        run: uv run ruff check src tests
+      - name: typecheck
+        run: uv run mypy
+      - name: tests (pure)
+        run: uv run pytest -m "not docker" -q
+
+  # the docker suite exercises real containers (phoenix, seeding, mirrored
+  # tools); slower, so it runs on demand and on main rather than every push
+  docker:
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: install
+        run: |
+          uv venv
+          uv pip install -e ".[dev]"
+      - name: tests (docker)
+        run: uv run pytest -m docker -q

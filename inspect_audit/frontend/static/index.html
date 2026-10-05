@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>inspect chat</title>
+<style>
+  :root { --ink: #1a1a1a; --dim: #8a8a8a; --line: #e6e6e6; --bg: #ffffff; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    display: flex; justify-content: center;
+  }
+  main { width: min(720px, 100vw - 32px); min-height: 100vh; display: flex; flex-direction: column; }
+  header {
+    display: flex; align-items: center; gap: 10px; padding: 14px 0 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  header h1 { font-size: 15px; font-weight: 600; margin: 0; }
+  #dot { width: 8px; height: 8px; border-radius: 50%; background: #d0d0d0; }
+  #dot.on { background: #34a853; }
+  select {
+    margin-left: auto; font: inherit; font-size: 13px; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; background: #fff;
+    max-width: 320px;
+  }
+  #log { flex: 1; overflow-y: auto; padding: 18px 0; display: flex; flex-direction: column; gap: 10px; }
+  .msg { max-width: 85%; white-space: pre-wrap; overflow-wrap: break-word; }
+  .user { align-self: flex-end; background: #f2f2f2; border-radius: 12px; padding: 8px 12px; }
+  .agent { align-self: flex-start; }
+  .thought { align-self: flex-start; color: var(--dim); font-style: italic; font-size: 13px; }
+  .tool {
+    align-self: flex-start; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--dim); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px;
+  }
+  .sys { align-self: center; color: var(--dim); font-size: 13px; }
+  #typing { align-self: flex-start; color: var(--dim); font-size: 13px; display: none; }
+  form {
+    display: flex; gap: 8px; padding: 12px 0 16px; border-top: 1px solid var(--line);
+  }
+  textarea {
+    flex: 1; font: inherit; resize: none; border: 1px solid var(--line);
+    border-radius: 10px; padding: 9px 12px; outline: none; height: 42px;
+  }
+  textarea:focus { border-color: #bdbdbd; }
+  button {
+    font: inherit; font-size: 14px; border: 1px solid var(--line); background: #fff;
+    border-radius: 10px; padding: 0 16px; cursor: pointer; color: var(--ink);
+  }
+  button:hover { background: #f7f7f7; }
+  button:disabled { color: var(--dim); cursor: default; background: #fff; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <span id="dot"></span>
+    <h1>inspect chat</h1>
+    <select id="sessions"><option>loading…</option></select>
+  </header>
+  <div id="log"></div>
+  <div id="typing">thinking…</div>
+  <form id="composer">
+    <textarea id="input" placeholder="connect to a session…" disabled></textarea>
+    <button id="send" type="submit" disabled>Send</button>
+    <button id="stop" type="button" title="Interrupt the current turn" disabled>Esc</button>
+  </form>
+</main>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const log = $("log"), input = $("input"), sendBtn = $("send"), stopBtn = $("stop");
+
+let ws = null, nextId = 1, pending = new Map(), sessionId = null;
+let elicit = null;          // pending elicitation/create {id, prop}
+let agentBubble = null;     // current streaming agent message div
+let agentMsgId = null;      // messageId of the streaming bubble
+let toolLines = new Map();  // toolCallId -> div
+
+function el(cls, text) {
+  const d = document.createElement("div");
+  d.className = "msg " + cls;
+  d.textContent = text || "";
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+  return d;
+}
+function sys(text) { el("sys", text); }
+function typing(on) { $("typing").style.display = on ? "block" : "none"; }
+
+function rpc(method, params) {
+  const id = nextId++;
+  ws.send(JSON.stringify({ jsonrpc: "2.0", id, method, params }));
+  return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+}
+function notify(method, params) {
+  ws.send(JSON.stringify({ jsonrpc: "2.0", method, params }));
+}
+function respond(id, result) {
+  ws.send(JSON.stringify({ jsonrpc: "2.0", id, result }));
+}
+
+async function connect(evalId) {
+  if (ws) { ws.onclose = null; ws.close(); }
+  sessionId = null; elicit = null; agentBubble = null; toolLines.clear();
+  pending.clear(); nextId = 1;
+  ws = new WebSocket(`ws://${location.host}/ws/${encodeURIComponent(evalId)}`);
+  ws.onmessage = (ev) => onFrame(JSON.parse(ev.data));
+  ws.onclose = () => { $("dot").classList.remove("on"); setEnabled(false); sys("disconnected"); };
+  await new Promise((res, rej) => { ws.onopen = res; ws.onerror = rej; });
+  $("dot").classList.add("on");
+
+  await rpc("initialize", {
+    protocolVersion: 1,
+    clientCapabilities: { elicitation: { form: {} } },
+    clientInfo: { name: "inspect-audit-chat", version: "0.1" },
+  });
+  const s = await rpc("session/new", { cwd: "/", mcpServers: [] });
+  sessionId = s.sessionId;
+  sys("attached to " + evalId.slice(0, 24));
+  setEnabled(true);
+}
+
+function setEnabled(on) {
+  input.disabled = !on; sendBtn.disabled = !on; stopBtn.disabled = !on;
+  input.placeholder = on ? "message the agent…" : "connect to a session…";
+  if (on) input.focus();
+}
+
+function onFrame(m) {
+  if (m.method !== undefined && m.id !== undefined) return onRequest(m);
+  if (m.method !== undefined) return onNotification(m);
+  const p = pending.get(m.id);
+  if (!p) return;
+  pending.delete(m.id);
+  if (m.error) { sys("error: " + (m.error.message || JSON.stringify(m.error))); p.reject(m.error); }
+  else p.resolve(m.result);
+}
+
+function onRequest(m) {
+  if (m.method === "elicitation/create") {
+    // the agent handed us the floor: answer via the main input box
+    const props = (m.params.requestedSchema && m.params.requestedSchema.properties) || {};
+    elicit = { id: m.id, prop: Object.keys(props)[0] || "message" };
+    typing(false);
+    agentBubble = null;
+    input.focus();
+  } else if (m.method === "session/request_permission") {
+    // v0: no approval policies in our tasks; refuse rather than guess
+    const opts = m.params.options || [];
+    const reject = opts.find((o) => o.kind === "reject_once") || opts[0];
+    respond(m.id, { outcome: { outcome: "selected", optionId: reject && reject.optionId } });
+    sys("tool permission auto-declined (no approval UI in v0)");
+  } else {
+    respond(m.id, {});
+  }
+}
+
+function onNotification(m) {
+  if (m.method === "session/update") {
+    const u = m.params.update || {};
+    switch (u.sessionUpdate) {
+      case "agent_message_chunk": {
+        const text = u.content && u.content.text;
+        if (typeof text !== "string") break;
+        if (!agentBubble || (u.messageId && u.messageId !== agentMsgId)) {
+          agentBubble = el("agent");
+          agentMsgId = u.messageId || null;
+        }
+        agentBubble.textContent += text;
+        log.scrollTop = log.scrollHeight;
+        break;
+      }
+      case "agent_thought_chunk": {
+        const text = u.content && u.content.text;
+        if (typeof text === "string" && text.trim()) el("thought", text.trim());
+        break;
+      }
+      case "tool_call": {
+        agentBubble = null;
+        const line = el("tool", `⚙ ${u.title || u.kind || "tool"} · ${u.status || "pending"}`);
+        if (u.toolCallId) toolLines.set(u.toolCallId, { div: line, title: u.title || u.kind || "tool" });
+        break;
+      }
+      case "tool_call_update": {
+        const t = toolLines.get(u.toolCallId);
+        if (t) t.div.textContent = `⚙ ${u.title || t.title} · ${u.status || ""}`;
+        break;
+      }
+      case "user_message_chunk": {
+        // operator input echoed back (e.g. sent from another client)
+        break;
+      }
+    }
+  } else if (m.method === "inspect/session_ended") {
+    typing(false); setEnabled(false); sys("sample completed");
+  } else if (m.method === "session/cancelled" || m.method === "cancelled") {
+    typing(false);
+  }
+}
+
+$("composer").addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const text = input.value.trim();
+  if (!text || !ws || ws.readyState !== 1) return;
+  input.value = "";
+  el("user", text);
+  agentBubble = null;
+  typing(true);
+  if (elicit) {
+    respond(elicit.id, { action: "accept", content: { [elicit.prop]: text } });
+    elicit = null;
+  } else if (sessionId) {
+    rpc("session/prompt", { sessionId, prompt: [{ type: "text", text }] })
+      .then((r) => { typing(false); if (r && r.stopReason === "cancelled") sys("turn interrupted"); })
+      .catch(() => typing(false));
+  }
+});
+
+input.addEventListener("keydown", (ev) => {
+  if (ev.key === "Enter" && !ev.shiftKey) { ev.preventDefault(); sendBtn.click(); }
+});
+
+stopBtn.addEventListener("click", () => {
+  if (sessionId) { notify("session/cancel", { sessionId }); sys("interrupt sent"); }
+});
+
+async function loadSessions() {
+  const sel = $("sessions");
+  const rows = await (await fetch("/api/sessions")).json();
+  sel.innerHTML = "";
+  if (!rows.length) {
+    sel.appendChild(new Option("no running ACP evals", ""));
+    return;
+  }
+  sel.appendChild(new Option("select a session…", ""));
+  for (const r of rows) sel.appendChild(new Option(r.eval_id.slice(0, 40), r.eval_id));
+  if (rows.length === 1) { sel.value = rows[0].eval_id; connect(rows[0].eval_id).catch((e) => sys("connect failed: " + e)); }
+}
+$("sessions").addEventListener("change", (ev) => {
+  if (ev.target.value) connect(ev.target.value).catch((e) => sys("connect failed: " + e));
+});
+loadSessions();
+setInterval(() => { if (!ws || ws.readyState > 1) loadSessions(); }, 4000);
+</script>
+</body>
+</html>

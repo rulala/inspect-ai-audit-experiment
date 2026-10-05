@@ -1,0 +1,38 @@
+# Run the benchmark itself on Hawk. Copy, edit, save under /workspace/jobs/, then hawk_submit.
+# Substitute the values from /inputs/seed.json `remote`: task_package, worker_models, hawk.
+name: inv-smoke-luna            # lowercase, digits, hyphens; unique per investigation
+packages:
+  - <remote.task_package>       # exactly the string from the seed
+tasks:
+  - package: <remote.task_package>
+    name: <registry package, e.g. inspect_evals>
+    items:
+      - name: <task, e.g. simpleqa_verified>
+        args: {}                 # task arguments the task exposes; sample_id: [..] selects items
+models:
+  - package: openai
+    name: openrouter
+    items:
+      - name: openai/gpt-5.6-luna          # from remote.worker_models
+        args:
+          base_url: https://openrouter.ai/api/v1
+          config:
+            reasoning_effort: low
+runner:
+  environment:
+    HAWK_API_URL: <remote.hawk>
+    HAWK_RUNNER_REFRESH_URL: ""            # direct to the provider, no middleman
+  secrets:
+    - name: OPENROUTER_API_KEY
+limit: 2                        # start small; expand once the result reads right
+cost_limit: 0.50                # dollars per sample, enforced in the runner. Required:
+                                # cost_limit x samples x models x epochs is what the job
+                                # holds against your allowance until you collect it
+epochs: 1
+token_limit: 2000000
+time_limit: 3600
+max_connections: 10
+max_retries: 10
+retry_attempts: 0        # a first job fails once; raise it only once the config works
+metadata:
+  purpose: one line on why this job exists

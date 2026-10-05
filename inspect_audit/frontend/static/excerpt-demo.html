@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>excerpt component</title>
+<style>
+ body { background:#fff; color:#1a1a1a; font:15px/1.55 -apple-system,sans-serif;
+        display:flex; justify-content:center; margin:0; }
+ main { width:min(760px,100vw - 32px); padding:36px 0 60px; }
+ h1 { font-size:16px; margin:0 0 4px; }
+ p.lede { color:#777; font-size:13.5px; margin:0 0 26px; }
+ .excerpt { margin:30px 0; }
+ .excerpt blockquote { margin:0; background:#f6f5f1; padding:15px 20px;
+            border-top:4px double #3a3a3a; border-bottom:4px double #3a3a3a; }
+ .excerpt .qbody { white-space:pre-wrap; color:#2b2b2b; overflow:hidden;
+            font:14.5px/1.62 Charter, Georgia, serif; }
+ .excerpt strong { font-weight:650; color:#000; }
+ .excerpt.tall .qbody { max-height:230px;
+            -webkit-mask-image:linear-gradient(#000 70%, transparent);
+            mask-image:linear-gradient(#000 70%, transparent); }
+ .excerpt.tall.open .qbody { max-height:none; -webkit-mask-image:none;
+            mask-image:none; }
+ .more { display:block; width:100%; text-align:center; background:none;
+            border:none; cursor:pointer; padding:6px 0 2px;
+            font:10.5px -apple-system,sans-serif; text-transform:uppercase;
+            letter-spacing:.14em; color:#8a8a8a; }
+ .more:hover { color:#3a3a3a; }
+ .excerpt figcaption { display:flex; gap:10px; align-items:baseline;
+            margin-top:7px; font-size:12.5px; color:#9a9a9a; }
+ .role { text-transform:uppercase; letter-spacing:.06em; font-size:10.5px;
+            color:#7a7a7a; border:1px solid #e0e0e0; border-radius:99px;
+            padding:1px 8px; }
+ .excerpt a { margin-left:auto; color:#3b6fb6; text-decoration:none; }
+ .excerpt a:hover { text-decoration:underline; }
+</style></head><body><main>
+<h1>excerpt component</h1>
+<p class="lede">excerpt(address, window, emphasis) — any-size verbatim window from
+the message at the address, any spans within it boldened, validated literally,
+deep-linked into inspect view.</p>
+
+<figure class="excerpt">
+  <blockquote><div class="qbody">Summary of the derivation:
+
+- For <strong>fixed \(i\), look only at</strong> the subword of \(\sigma\) formed by the letters \(i,i+1,\dots,n\)…</div></blockquote>
+  
+  <figcaption>
+    <span class="role">assistant</span>
+    <span class="src">flow_completed_S-adaptive+C_FM_gpt-5.4_10M_e3_s5.eval · sample PLD1</span>
+    <a href="http://127.0.0.1:7701/#/logs/frontiermath/flow_completed_S-adaptive+C_FM_gpt-5.4_10M_e3_s5.eval/samples/sample_uuid/LtFSiCsVEqj3Zc5uXET7AJ/messages?message=LPsMnypTTsKMhtKbSqN88k" target="_blank">open in viewer ↗</a>
+  </figcaption>
+</figure>
+<figure class="excerpt tall">
+  <blockquote><div class="qbody"><strong>Summary of the derivation:
+
+- For fixed \(i\), look only at the subword of \(\sigma\) formed by the letters \(i,i+1,\dots,n\)</strong>. Its relative order is a uniform permutation of size \(m=n-i+1\).
+- For a uniform permutation \(\pi\in S_m\), the pair \((1,2)\) satisfies “\(2\) is before \(1\) in \(F(\pi)\)” iff \(2\) is to the left of \(1\) in \(\pi\) and they are not adjacent there.
+- Therefore
+  \[
+  \Pr\big((F(\sigma))^{-1}(i+1)&lt;(F(\sigma))^{-1}(i)\big)=\frac12-\frac1m
+  \]
+  with \(m=n-<strong>i+1\).
+- Summing over \(i=1,\dots,n-1\),
+  \[
+  X=\sum_{m=2}^{n}\left(\frac12-\frac1m\right)=\frac{n+1}{2}-H_n.
+  \]
+- F</strong>or \(n=10^{12}\),
+  \[
+  X=500000000000.5 - H_{10^{12}}
+  \approx 499999999972.291763\ldots
+  \]
+  so \(\lfloor X\rfloor=499999999972\).
+
+I&#x27;ll now submit that integer.
+ </div></blockquote>
+  <button class="more" onclick="this.parentElement.classList.toggle('open');this.textContent=this.parentElement.classList.contains('open')?'collapse':'show all'">show all</button>
+  <figcaption>
+    <span class="role">assistant</span>
+    <span class="src">flow_completed_S-adaptive+C_FM_gpt-5.4_10M_e3_s5.eval · sample PLD1</span>
+    <a href="http://127.0.0.1:7701/#/logs/frontiermath/flow_completed_S-adaptive+C_FM_gpt-5.4_10M_e3_s5.eval/samples/sample_uuid/LtFSiCsVEqj3Zc5uXET7AJ/messages?message=LPsMnypTTsKMhtKbSqN88k" target="_blank">open in viewer ↗</a>
+  </figcaption>
+</figure>
+</main></body></html>

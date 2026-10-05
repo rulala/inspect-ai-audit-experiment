@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "inspect_audit"
+version = "0.0.1"
+description = "Benchmark validity auditing for Inspect AI evals"
+authors = [{ name = "Generality Labs" }]
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT License" }
+dependencies = [
+    "inspect-ai>=0.3.259",
+    "pandas>=2.0.0",
+    "pillow>=10.0",
+    "pyarrow>=10.0.1",
+    "openai>=1.0",
+]
+
+[project.entry-points.inspect_ai]
+inspect_audit = "inspect_audit._registry"
+
+[project.optional-dependencies]
+# Hawk requires Python 3.13; the core package supports 3.11+.
+remote = ["hawk>=2.5,<3; python_version >= '3.13'"]
+dev = [
+    "ruff",
+    "mypy",
+    "pytest",
+    "pytest-xdist",
+    "pandas-stubs",
+    "types-PyYAML",
+    "hawk>=2.5,<3; python_version >= '3.13'",
+]
+frontend = ["websockets"]
+reporting = ["matplotlib", "girth==0.8.0"]
+
+[tool.ruff]
+src = ["src"]
+# Keep vendored skills unchanged.
+extend-exclude = ["src/inspect_audit/skills"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "D", "I", "B", "SIM101", "PLE"]
+ignore = ["D10", "E501"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+strict = true
+mypy_path = "src"
+files = ["src"]
+exclude = ["src/inspect_audit/skills/"]
+
+[[tool.mypy.overrides]]
+module = ["matplotlib", "matplotlib.*", "inspect_evals", "inspect_evals.*", "girth", "scipy.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "tests"]
+testpaths = ["tests"]
+markers = ["docker: needs a running Docker daemon"]

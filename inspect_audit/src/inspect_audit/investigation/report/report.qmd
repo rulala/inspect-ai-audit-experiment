@@ -1,0 +1,67 @@
+---
+title: "Benchmark audit"
+format:
+  html:
+    embed-resources: true
+    toc: true
+    theme: cosmo
+    css: styles.css
+execute:
+  echo: false
+---
+
+## Summary {.unnumbered}
+
+<!-- Two or three sentences: what the benchmark asks the model to do, what information
+and tools it receives, and how success is measured. Then one linked bullet per
+substantive finding, including positive findings. Lead with the conclusion and give
+its magnitude/evidence and scope. Group instances of the same defect together.
+Link each bullet to an explicit anchor in the full audit. End with one short coverage
+statement. Do not put a full methods narrative here. -->
+
+## Benchmark architecture {.unnumbered}
+
+<!-- Use components.architecture with evidence/architecture.json to draw the actual
+information flow, including the agent-visible boundary and hidden scoring inputs.
+Cite source evidence for connections. Mark uncertain connections as unverified.
+Embed the resulting SVG here. Do not invent tools or feedback loops. -->
+
+---
+
+# Full audit
+
+## The task
+
+<!-- Is the ground truth correct? Is each item well described, with one defensible answer?
+Is it solvable as given, with what the agent is actually allowed? Can the answer be reached
+without doing the task: from the environment, by guessing, from memory? One literal example
+item. Cite items by id. -->
+
+## The grader
+
+<!-- Does it credit only correct answers? Does it reject correct ones? Is it stable:
+deterministic, the same judge across the leaderboard, reproducible today? Does it capture
+what the task is for, or a proxy? Name the judge model(s) actually recorded in the logs. -->
+
+## The harness and environment
+
+<!-- Configured as the paper and code say (versions, tools, network, data present)? Fair
+across models (same tools, budgets, prompts, termination)? Any leak that should not be
+there: web access, stale state, answer files? Did the environment break attempts? -->
+
+## Aggregation and limits
+
+<!-- What was excluded before the headline number, and why? Do turn, token or time limits
+cut off capable work, unequally across models? Is the number informative: saturation,
+a ceiling from broken items, statistical power? Attempted and completed populations. -->
+
+## How agents approach it
+
+<!-- Where do they converge, diverge, get confused? Does behaviour disagree with the paper's
+account? Label the failed attempts: capability failure, or one of the causes above, with
+counts per model and denominators. -->
+
+## How it is built
+
+<!-- Code quality of task, scorer and harness; divergence between paper, README and
+implementation; things a maintainer should fix. Low weight; keep it short. -->

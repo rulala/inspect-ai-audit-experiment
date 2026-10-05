@@ -1,0 +1,29 @@
+additionalResources:
+  - |
+    apiVersion: cilium.io/v2
+    kind: CiliumNetworkPolicy
+    metadata:
+      name: {{ template "agentEnv.fullname" $ }}-default-internet-egress
+    spec:
+      endpointSelector:
+        matchLabels:
+          io.kubernetes.pod.namespace: {{ .Release.Namespace }}
+          {{- include "agentEnv.selectorLabels" $ | nindent 6 }}
+          inspect/service: default
+      egress:
+        - toEndpoints:
+            - matchLabels:
+                io.kubernetes.pod.namespace: kube-system
+                k8s-app: kube-dns
+            - matchLabels:
+                io.kubernetes.pod.namespace: kube-system
+                k8s-app: node-local-dns
+          toPorts:
+            - ports:
+                - port: "53"
+                  protocol: ANY
+              rules:
+                dns:
+                  - matchPattern: "*"
+        - toEntities:
+            - world

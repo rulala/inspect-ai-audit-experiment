@@ -1,0 +1,52 @@
+# Audit benchmark items with inspect_audit's sample auditors. Copy, edit, save, hawk_submit.
+# `logs` is either the seed's remote.supplied_logs or hawk:<eval set id of a job you ran>.
+# Both are fetched through the Hawk API, so a job reads them whatever its own id is; the
+# id is assigned at submission and is not yours to set.
+name: inv-audit-smoke
+packages:
+  - <remote.audit_package>
+  - <remote.task_package>
+tasks:
+  - package: <remote.audit_package>
+    name: inspect_audit
+    items:
+      - name: audit
+        args:
+          task: <registry name of the audited task, e.g. inspect_evals/simpleqa_verified>
+          logs: <remote.supplied_logs, or hawk:<eval set id of your job>>
+          items: [gold-answer, answer-format, red-teaming, insufficiently-specified, other-findings]
+          auditor_image: <remote.auditor_image>
+          # samples: ["<benchmark item id>", ...]   # audit named items instead of the first N
+          # notes: a general steer for every auditor; never an answer
+models:
+  - package: openai
+    name: openrouter
+    items:
+      - name: openai/gpt-5.6-luna          # the auditor
+        args:
+          base_url: https://openrouter.ai/api/v1
+model_roles:
+  grader:                                  # the model the benchmark's scorer calls, if it calls one
+    package: openai
+    name: openrouter
+    items:
+      - name: openai/gpt-5-mini
+        args:
+          base_url: https://openrouter.ai/api/v1
+          config:
+            reasoning_effort: low
+runner:
+  environment:
+    HAWK_API_URL: <remote.hawk>
+    HAWK_RUNNER_REFRESH_URL: ""
+  secrets:
+    - name: OPENROUTER_API_KEY
+limit: 1                                   # audited items; the size the reservation uses
+cost_limit: 2.00                           # dollars per audited item, enforced in the runner
+epochs: 1
+token_limit: 4000000
+time_limit: 7200
+max_connections: 5
+max_retries: 10
+retry_attempts: 0        # a first job fails once; raise it only once the config works
+timeout: 600
