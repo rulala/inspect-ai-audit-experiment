@@ -1,0 +1,74 @@
+{
+  "component": "architecture",
+  "data": {
+    "nodes": [
+      {
+        "id": "data",
+        "label": "Pinned ARC Easy test record",
+        "visible": false,
+        "kind": "dataset"
+      },
+      {
+        "id": "prompt",
+        "label": "Question + displayed choices + format instruction",
+        "visible": true,
+        "kind": "dataset"
+      },
+      {
+        "id": "agent",
+        "label": "Model",
+        "visible": true,
+        "kind": "agent"
+      },
+      {
+        "id": "parser",
+        "label": "multiple_choice answer parser",
+        "visible": false,
+        "kind": "scorer"
+      },
+      {
+        "id": "scorer",
+        "label": "choice scorer + accuracy",
+        "visible": false,
+        "kind": "aggregate"
+      }
+    ],
+    "edges": [
+      {
+        "from": "data",
+        "to": "prompt",
+        "label": "question and choice text",
+        "source": "src/inspect_evals/arc/arc.py:65-80",
+        "verified": true
+      },
+      {
+        "from": "prompt",
+        "to": "agent",
+        "label": "single user message",
+        "source": "report/evidence/recorded_samples.json",
+        "verified": true
+      },
+      {
+        "from": "agent",
+        "to": "parser",
+        "label": "completion",
+        "source": "report/evidence/builtin_code.txt",
+        "verified": true
+      },
+      {
+        "from": "data",
+        "to": "scorer",
+        "label": "hidden position-normalised target",
+        "source": "src/inspect_evals/arc/arc.py:70-79",
+        "verified": true
+      },
+      {
+        "from": "parser",
+        "to": "scorer",
+        "label": "selected choice",
+        "source": "report/evidence/builtin_code.txt",
+        "verified": true
+      }
+    ]
+  }
+}

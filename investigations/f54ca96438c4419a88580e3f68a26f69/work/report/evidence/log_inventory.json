@@ -1,0 +1,598 @@
+{
+  "path": "/inputs/logs/0/2026-10-04T13-25-42-00-00_arc-easy_HFGiKfxMaxRhdK5uCohoK5.eval",
+  "header": {
+    "version": 2,
+    "status": "success",
+    "eval": {
+      "eval_set_id": null,
+      "eval_id": "Qe3VVp7sq9nuFD3FXEM2kh",
+      "run_id": "CxRLDJAz9WiYXvEHXDrbQe",
+      "created": "2026-10-04T13:25:42+00:00",
+      "task": "inspect_evals/arc_easy",
+      "task_id": "HFGiKfxMaxRhdK5uCohoK5",
+      "task_version": 2,
+      "task_file": null,
+      "task_display_name": "arc_easy",
+      "task_registry_name": "inspect_evals/arc_easy",
+      "task_attribs": {},
+      "task_args": {},
+      "task_args_passed": {},
+      "solver": null,
+      "solver_args": null,
+      "solver_args_passed": {},
+      "tags": null,
+      "dataset": {
+        "name": "allenai/ai2_arc",
+        "location": "allenai/ai2_arc",
+        "samples": 2376,
+        "sample_ids": [
+          "Mercury_417466",
+          "Mercury_7081673",
+          "Mercury_7239733",
+          "NYSEDREGENTS_2015_4_8",
+          "Mercury_7037258"
+        ],
+        "shuffled": false
+      },
+      "sandbox": null,
+      "model": "openai/gpt-5.6",
+      "model_generate_config": {
+        "max_retries": null,
+        "timeout": null,
+        "attempt_timeout": null,
+        "stream_idle_timeout": null,
+        "max_connections": null,
+        "adaptive_connections": null,
+        "system_message": null,
+        "max_tokens": null,
+        "top_p": null,
+        "temperature": null,
+        "stop_seqs": null,
+        "best_of": null,
+        "frequency_penalty": null,
+        "presence_penalty": null,
+        "logit_bias": null,
+        "seed": null,
+        "top_k": null,
+        "num_choices": null,
+        "logprobs": null,
+        "top_logprobs": null,
+        "prompt_logprobs": null,
+        "parallel_tool_calls": null,
+        "internal_tools": null,
+        "max_tool_output": null,
+        "cache_prompt": null,
+        "fallback_models": null,
+        "fail_on_refusal": null,
+        "verbosity": null,
+        "effort": null,
+        "reasoning_effort": null,
+        "reasoning_mode": null,
+        "reasoning_tokens": null,
+        "reasoning_summary": null,
+        "reasoning_history": null,
+        "response_schema": null,
+        "extra_headers": null,
+        "extra_body": null,
+        "modalities": null,
+        "cache": null,
+        "batch": null
+      },
+      "model_base_url": null,
+      "model_args": {},
+      "model_roles": null,
+      "config": {
+        "limit": 5,
+        "sample_id": null,
+        "sample_shuffle": null,
+        "epochs": 1,
+        "epochs_reducer": null,
+        "approval": null,
+        "review": null,
+        "notification": null,
+        "fail_on_error": true,
+        "continue_on_fail": false,
+        "retry_on_error": null,
+        "score_on_error": false,
+        "message_limit": null,
+        "token_limit": null,
+        "token_limit_type": null,
+        "turn_limit": null,
+        "time_limit": null,
+        "working_limit": null,
+        "cost_limit": null,
+        "max_samples": null,
+        "max_dataset_memory": null,
+        "max_tasks": null,
+        "max_subprocesses": null,
+        "max_sandboxes": null,
+        "sandbox_cleanup": true,
+        "sandbox_prebuilt": false,
+        "log_samples": true,
+        "log_realtime": true,
+        "log_images": true,
+        "log_model_api": null,
+        "log_buffer": null,
+        "log_shared": 0,
+        "score_display": true,
+        "acp_server": null
+      },
+      "revision": null,
+      "packages": {
+        "inspect_ai": "0.3.276",
+        "inspect_evals": "0.23.0"
+      },
+      "metadata": {
+        "full_task_version": "2-A",
+        "task_interface_version": "A",
+        "task_comparability_version": 2
+      },
+      "viewer": null,
+      "scorers": [
+        {
+          "name": "choice",
+          "options": {},
+          "metrics": [
+            {
+              "name": "inspect_ai/accuracy",
+              "options": {}
+            },
+            {
+              "name": "inspect_ai/stderr",
+              "options": {}
+            }
+          ],
+          "metadata": {}
+        }
+      ],
+      "metrics": null,
+      "headline_metric": null
+    },
+    "plan": {
+      "name": "plan",
+      "steps": [
+        {
+          "solver": "multiple_choice",
+          "params": {
+            "template": null,
+            "cot": false,
+            "multiple_correct": false,
+            "max_tokens": null
+          },
+          "params_passed": {}
+        }
+      ],
+      "finish": null,
+      "config": {
+        "max_retries": null,
+        "timeout": null,
+        "attempt_timeout": null,
+        "stream_idle_timeout": null,
+        "max_connections": null,
+        "adaptive_connections": null,
+        "system_message": null,
+        "max_tokens": null,
+        "top_p": null,
+        "temperature": null,
+        "stop_seqs": null,
+        "best_of": null,
+        "frequency_penalty": null,
+        "presence_penalty": null,
+        "logit_bias": null,
+        "seed": null,
+        "top_k": null,
+        "num_choices": null,
+        "logprobs": null,
+        "top_logprobs": null,
+        "prompt_logprobs": null,
+        "parallel_tool_calls": null,
+        "internal_tools": null,
+        "max_tool_output": null,
+        "cache_prompt": null,
+        "fallback_models": null,
+        "fail_on_refusal": null,
+        "verbosity": null,
+        "effort": null,
+        "reasoning_effort": null,
+        "reasoning_mode": null,
+        "reasoning_tokens": null,
+        "reasoning_summary": null,
+        "reasoning_history": null,
+        "response_schema": null,
+        "extra_headers": null,
+        "extra_body": null,
+        "modalities": null,
+        "cache": null,
+        "batch": null
+      }
+    },
+    "results": {
+      "total_samples": 5,
+      "completed_samples": 5,
+      "logged_samples": null,
+      "early_stopping": null,
+      "scores": [
+        {
+          "name": "choice",
+          "scorer": "choice",
+          "reducer": null,
+          "scored_samples": 5,
+          "unscored_samples": 0,
+          "params": {},
+          "metrics": {
+            "accuracy": {
+              "name": "accuracy",
+              "group": null,
+              "value": 1.0,
+              "params": {},
+              "metadata": null
+            },
+            "stderr": {
+              "name": "stderr",
+              "group": null,
+              "value": 0.0,
+              "params": {},
+              "metadata": null
+            }
+          },
+          "metadata": null
+        }
+      ],
+      "headline": {
+        "scorer": "choice",
+        "score": "choice",
+        "metric": "accuracy",
+        "reducer": null
+      },
+      "metadata": null
+    },
+    "stats": {
+      "started_at": "2026-10-04T13:25:42+00:00",
+      "completed_at": "2026-10-04T13:25:48+00:00",
+      "model_usage": {
+        "openai/gpt-5.6": {
+          "input_tokens": 455,
+          "output_tokens": 35,
+          "total_tokens": 490,
+          "input_tokens_cache_write": null,
+          "input_tokens_cache_read": null,
+          "reasoning_tokens": 0,
+          "total_cost": null
+        }
+      },
+      "role_usage": {},
+      "connection_limit_history": []
+    },
+    "error": null,
+    "invalidated": false,
+    "log_updates": null,
+    "config_updates": null,
+    "tags": [],
+    "metadata": {
+      "full_task_version": "2-A",
+      "task_interface_version": "A",
+      "task_comparability_version": 2
+    },
+    "samples": null,
+    "reductions": [
+      {
+        "scorer": "choice",
+        "reducer": null,
+        "samples": [
+          {
+            "value": 1.0,
+            "answer": "A",
+            "explanation": "ANSWER: A",
+            "reason": null,
+            "metadata": null,
+            "history": [],
+            "sample_id": "Mercury_417466"
+          },
+          {
+            "value": 1.0,
+            "answer": "B",
+            "explanation": "ANSWER: B",
+            "reason": null,
+            "metadata": null,
+            "history": [],
+            "sample_id": "Mercury_7081673"
+          },
+          {
+            "value": 1.0,
+            "answer": "D",
+            "explanation": "ANSWER: D",
+            "reason": null,
+            "metadata": null,
+            "history": [],
+            "sample_id": "Mercury_7239733"
+          },
+          {
+            "value": 1.0,
+            "answer": "D",
+            "explanation": "ANSWER: D",
+            "reason": null,
+            "metadata": null,
+            "history": [],
+            "sample_id": "NYSEDREGENTS_2015_4_8"
+          },
+          {
+            "value": 1.0,
+            "answer": "B",
+            "explanation": "ANSWER: B",
+            "reason": null,
+            "metadata": null,
+            "history": [],
+            "sample_id": "Mercury_7037258"
+          }
+        ]
+      }
+    ]
+  },
+  "sample_summaries": [
+    {
+      "id": "Mercury_417466",
+      "epoch": 1,
+      "input": "Which statement best explains why photosynthesis is the foundation of most food webs?",
+      "choices": [
+        "Sunlight is the source of energy for nearly all ecosystems.",
+        "Most ecosystems are found on land instead of in water.",
+        "Carbon dioxide is more available than other gases.",
+        "The producers in all ecosystems are plants."
+      ],
+      "target": "A",
+      "metadata": {},
+      "scores": {
+        "choice": {
+          "value": "C",
+          "answer": "A",
+          "explanation": "ANSWER: A",
+          "reason": null,
+          "metadata": null,
+          "history": []
+        }
+      },
+      "model_usage": {
+        "openai/gpt-5.6": {
+          "input_tokens": 109,
+          "output_tokens": 7,
+          "total_tokens": 116,
+          "input_tokens_cache_write": null,
+          "input_tokens_cache_read": null,
+          "reasoning_tokens": 0,
+          "total_cost": null
+        }
+      },
+      "role_usage": {},
+      "model_fallbacks": null,
+      "started_at": "2026-10-04T13:25:42.960576+00:00",
+      "completed_at": "2026-10-04T13:25:46.710646+00:00",
+      "total_time": 3.75,
+      "working_time": 0.811,
+      "uuid": "hUeEQfqW26htVNHixCiwse",
+      "error": null,
+      "limit": null,
+      "limit_reason": null,
+      "retries": 0,
+      "completed": true,
+      "message_count": 2,
+      "turn_count": 1,
+      "token_limit": null,
+      "token_limit_type": null,
+      "token_limit_usage": null,
+      "message_limit": null,
+      "time_limit": null
+    },
+    {
+      "id": "Mercury_7081673",
+      "epoch": 1,
+      "input": "Which piece of safety equipment is used to keep mold spores from entering the respiratory system?",
+      "choices": [
+        "safety goggles",
+        "breathing mask",
+        "rubber gloves",
+        "lead apron"
+      ],
+      "target": "B",
+      "metadata": {},
+      "scores": {
+        "choice": {
+          "value": "C",
+          "answer": "B",
+          "explanation": "ANSWER: B",
+          "reason": null,
+          "metadata": null,
+          "history": []
+        }
+      },
+      "model_usage": {
+        "openai/gpt-5.6": {
+          "input_tokens": 82,
+          "output_tokens": 7,
+          "total_tokens": 89,
+          "input_tokens_cache_write": null,
+          "input_tokens_cache_read": null,
+          "reasoning_tokens": 0,
+          "total_cost": null
+        }
+      },
+      "role_usage": {},
+      "model_fallbacks": null,
+      "started_at": "2026-10-04T13:25:42.961528+00:00",
+      "completed_at": "2026-10-04T13:25:47.576731+00:00",
+      "total_time": 4.615,
+      "working_time": 1.674,
+      "uuid": "iQDEyEnyHk32KPPjVVU3y4",
+      "error": null,
+      "limit": null,
+      "limit_reason": null,
+      "retries": 0,
+      "completed": true,
+      "message_count": 2,
+      "turn_count": 1,
+      "token_limit": null,
+      "token_limit_type": null,
+      "token_limit_usage": null,
+      "message_limit": null,
+      "time_limit": null
+    },
+    {
+      "id": "Mercury_7037258",
+      "epoch": 1,
+      "input": "Which best describes the structure of an atom?",
+      "choices": [
+        "a lightweight core surrounded by neutral particles",
+        "a massive core surrounded by negatively-charged particles",
+        "a network of interacting positive and negative particles",
+        "overlapping layers of neutral, positive, and negative particles"
+      ],
+      "target": "B",
+      "metadata": {},
+      "scores": {
+        "choice": {
+          "value": "C",
+          "answer": "B",
+          "explanation": "ANSWER: B",
+          "reason": null,
+          "metadata": null,
+          "history": []
+        }
+      },
+      "model_usage": {
+        "openai/gpt-5.6": {
+          "input_tokens": 101,
+          "output_tokens": 7,
+          "total_tokens": 108,
+          "input_tokens_cache_write": null,
+          "input_tokens_cache_read": null,
+          "reasoning_tokens": 0,
+          "total_cost": null
+        }
+      },
+      "role_usage": {},
+      "model_fallbacks": null,
+      "started_at": "2026-10-04T13:25:42.964113+00:00",
+      "completed_at": "2026-10-04T13:25:47.579260+00:00",
+      "total_time": 4.615,
+      "working_time": 1.67,
+      "uuid": "CAghVg8S69o7ptkPxdroAW",
+      "error": null,
+      "limit": null,
+      "limit_reason": null,
+      "retries": 0,
+      "completed": true,
+      "message_count": 2,
+      "turn_count": 1,
+      "token_limit": null,
+      "token_limit_type": null,
+      "token_limit_usage": null,
+      "message_limit": null,
+      "time_limit": null
+    },
+    {
+      "id": "NYSEDREGENTS_2015_4_8",
+      "epoch": 1,
+      "input": "Which characteristic describes the texture of a kitten's fur?",
+      "choices": [
+        "gray",
+        "warm",
+        "long",
+        "soft"
+      ],
+      "target": "D",
+      "metadata": {},
+      "scores": {
+        "choice": {
+          "value": "C",
+          "answer": "D",
+          "explanation": "ANSWER: D",
+          "reason": null,
+          "metadata": null,
+          "history": []
+        }
+      },
+      "model_usage": {
+        "openai/gpt-5.6": {
+          "input_tokens": 72,
+          "output_tokens": 7,
+          "total_tokens": 79,
+          "input_tokens_cache_write": null,
+          "input_tokens_cache_read": null,
+          "reasoning_tokens": 0,
+          "total_cost": null
+        }
+      },
+      "role_usage": {},
+      "model_fallbacks": null,
+      "started_at": "2026-10-04T13:25:42.963287+00:00",
+      "completed_at": "2026-10-04T13:25:47.695933+00:00",
+      "total_time": 4.733,
+      "working_time": 1.788,
+      "uuid": "59BdMAbY8ez7kqsXP7a7it",
+      "error": null,
+      "limit": null,
+      "limit_reason": null,
+      "retries": 0,
+      "completed": true,
+      "message_count": 2,
+      "turn_count": 1,
+      "token_limit": null,
+      "token_limit_type": null,
+      "token_limit_usage": null,
+      "message_limit": null,
+      "time_limit": null
+    },
+    {
+      "id": "Mercury_7239733",
+      "epoch": 1,
+      "input": "Meiosis is a type of cell division in which germ cells divide to produce haploid cells. Where does meiosis occur?",
+      "choices": [
+        "brain cells",
+        "bone cells",
+        "muscle cells",
+        "ovary cells"
+      ],
+      "target": "D",
+      "metadata": {},
+      "scores": {
+        "choice": {
+          "value": "C",
+          "answer": "D",
+          "explanation": "ANSWER: D",
+          "reason": null,
+          "metadata": null,
+          "history": []
+        }
+      },
+      "model_usage": {
+        "openai/gpt-5.6": {
+          "input_tokens": 91,
+          "output_tokens": 7,
+          "total_tokens": 98,
+          "input_tokens_cache_write": null,
+          "input_tokens_cache_read": null,
+          "reasoning_tokens": 0,
+          "total_cost": null
+        }
+      },
+      "role_usage": {},
+      "model_fallbacks": null,
+      "started_at": "2026-10-04T13:25:42.962503+00:00",
+      "completed_at": "2026-10-04T13:25:48.822583+00:00",
+      "total_time": 5.86,
+      "working_time": 2.919,
+      "uuid": "CaL46ZAqGhWFg5sFL8eYnK",
+      "error": null,
+      "limit": null,
+      "limit_reason": null,
+      "retries": 0,
+      "completed": true,
+      "message_count": 2,
+      "turn_count": 1,
+      "token_limit": null,
+      "token_limit_type": null,
+      "token_limit_usage": null,
+      "message_limit": null,
+      "time_limit": null
+    }
+  ]
+}

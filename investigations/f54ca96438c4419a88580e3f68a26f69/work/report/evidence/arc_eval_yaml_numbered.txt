@@ -1,0 +1,22 @@
+     1	title: 'ARC: AI2 Reasoning Challenge'
+     2	description: |
+     3	  Dataset of natural, grade-school science multiple-choice questions (authored for human tests).
+     4	arxiv: https://arxiv.org/abs/1803.05457
+     5	group: Reasoning
+     6	contributors:
+     7	  - jjallaire
+     8	version: "2-A"
+     9	tasks:
+    10	  - name: arc_easy
+    11	    dataset_samples: 2376
+    12	  - name: arc_challenge
+    13	    dataset_samples: 1172
+    14	
+    15	external_assets:
+    16	  - type: huggingface
+    17	    source: allenai/ai2_arc
+    18	    fetch_method: hf_dataset
+    19	    state: pinned
+    20	
+    21	metadata:
+    22	  fast: true

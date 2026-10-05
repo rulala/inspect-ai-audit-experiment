@@ -1,0 +1,69 @@
+{
+  "source": "/workspace/report/evidence/arc_easy_test.parquet",
+  "records": 2376,
+  "columns": [
+    "id",
+    "question",
+    "choices",
+    "answerKey"
+  ],
+  "choice_counts": {
+    "4": 2365,
+    "3": 7,
+    "5": 4
+  },
+  "label_patterns": {
+    "A|B|C|D": 2268,
+    "1|2|3|4": 97,
+    "A|B|C": 7,
+    "A|B|C|D|E": 4
+  },
+  "source_answerKey_counts": {
+    "A": 570,
+    "B": 563,
+    "D": 535,
+    "C": 610,
+    "2": 22,
+    "4": 26,
+    "3": 23,
+    "1": 26,
+    "E": 1
+  },
+  "displayed_target_counts": {
+    "A": 596,
+    "B": 585,
+    "D": 561,
+    "C": 633,
+    "E": 1
+  },
+  "malformed_count": 0,
+  "malformed": [],
+  "unique_ids": 2376,
+  "duplicate_ids": {},
+  "unique_questions": 2371,
+  "duplicate_question_groups": 5,
+  "duplicate_questions": {
+    "A wetland was drained to build a mall. Two years later, there were no more toads in that area. Why did the toads disappear?": [
+      154,
+      1250
+    ],
+    "Which material is the best conductor of electricity?": [
+      317,
+      1201
+    ],
+    "What causes day and night on Earth?": [
+      758,
+      1385
+    ],
+    "Which of the following is NOT a mixture?": [
+      785,
+      2306
+    ],
+    "What keeps the planets in orbit around the Sun?": [
+      1055,
+      2359
+    ]
+  },
+  "duplicate_choice_text_count": 0,
+  "duplicate_choice_text": []
+}

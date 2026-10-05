@@ -1,0 +1,77 @@
+[
+  {
+    "id": "Mercury_417466",
+    "source_answerKey": "A",
+    "source_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "source_position_target": "A",
+    "logged_target": "A",
+    "question_equal": true,
+    "choices_equal": true,
+    "target_equal": true
+  },
+  {
+    "id": "Mercury_7081673",
+    "source_answerKey": "B",
+    "source_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "source_position_target": "B",
+    "logged_target": "B",
+    "question_equal": true,
+    "choices_equal": true,
+    "target_equal": true
+  },
+  {
+    "id": "Mercury_7239733",
+    "source_answerKey": "D",
+    "source_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "source_position_target": "D",
+    "logged_target": "D",
+    "question_equal": true,
+    "choices_equal": true,
+    "target_equal": true
+  },
+  {
+    "id": "NYSEDREGENTS_2015_4_8",
+    "source_answerKey": "D",
+    "source_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "source_position_target": "D",
+    "logged_target": "D",
+    "question_equal": true,
+    "choices_equal": true,
+    "target_equal": true
+  },
+  {
+    "id": "Mercury_7037258",
+    "source_answerKey": "B",
+    "source_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "source_position_target": "B",
+    "logged_target": "B",
+    "question_equal": true,
+    "choices_equal": true,
+    "target_equal": true
+  }
+]

@@ -1,0 +1,15 @@
+services:
+  default:
+    build:
+      context: .
+    command: sleep infinity
+    init: true
+    volumes:
+    - read_only: true
+      source: /Users/rula/inspect-project/investigations/4ab9734300af493a8153ec467385e6f5/inputs
+      target: /inputs
+      type: bind
+    - source: /Users/rula/inspect-project/investigations/4ab9734300af493a8153ec467385e6f5/work
+      target: /workspace
+      type: bind
+    working_dir: /workspace

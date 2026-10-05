@@ -1,0 +1,81 @@
+     1	"""
+     2	Think you have Solved Question Answering? Try ARC, the AI2 Reasoning Challenge
+     3	
+     4	Peter Clark, Isaac Cowhey, Oren Etzioni, Tushar Khot, Ashish Sabharwal, Carissa Schoenick, Oyvind Tafjord
+     5	https://arxiv.org/abs/1803.05457
+     6	
+     7	# run all subsets
+     8	inspect eval arc.py
+     9	
+    10	# run specific subsets
+    11	inspect eval arc.py@arc_easy
+    12	inspect eval arc.py@arc_challenge
+    13	"""
+    14	
+    15	from typing import Any, Literal
+    16	
+    17	from inspect_ai import Task, task
+    18	from inspect_ai.dataset import Sample
+    19	from inspect_ai.scorer import choice
+    20	from inspect_ai.solver import multiple_choice
+    21	
+    22	from inspect_evals.metadata import load_eval_metadata
+    23	from inspect_evals.utils.huggingface import hf_dataset
+    24	
+    25	DATASET_PATH = "allenai/ai2_arc"
+    26	ARC_DATASET_REVISION = "210d026faf9955653af8916fad021475a3f00453"
+    27	
+    28	
+    29	EVAL_VERSION = load_eval_metadata("arc").version
+    30	
+    31	
+    32	def arc_task(dataset_name: Literal["ARC-Easy", "ARC-Challenge"]) -> Task:
+    33	    """Inspect task implementing the ARC benchmark.
+    34	
+    35	    Args:
+    36	        dataset_name (Literal["ARC-Easy", "ARC-Challenge"]): The dataset to use
+    37	    """
+    38	    return Task(
+    39	        dataset=hf_dataset(
+    40	            path=DATASET_PATH,
+    41	            name=dataset_name,
+    42	            split="test",
+    43	            sample_fields=record_to_sample,
+    44	            revision=ARC_DATASET_REVISION,
+    45	        ),
+    46	        solver=multiple_choice(),
+    47	        scorer=choice(),
+    48	        version=EVAL_VERSION.comparability_version,
+    49	        metadata=EVAL_VERSION.to_metadata(),
+    50	    )
+    51	
+    52	
+    53	@task
+    54	def arc_easy() -> Task:
+    55	    """Inspect task implementing the ARC-Easy benchmark."""
+    56	    return arc_task("ARC-Easy")
+    57	
+    58	
+    59	@task
+    60	def arc_challenge() -> Task:
+    61	    """Inspect task implementing the ARC-Challenge benchmark."""
+    62	    return arc_task("ARC-Challenge")
+    63	
+    64	
+    65	def record_to_sample(record: dict[str, Any]) -> Sample:
+    66	    # read the labels and text
+    67	    choices = record["choices"]
+    68	    choices = dict(zip(choices["label"], choices["text"]))
+    69	
+    70	    # determine the target then normalize to letter
+    71	    answerKey = record["answerKey"]
+    72	    target_index = list(choices.keys()).index(answerKey)
+    73	    target = chr(ord("A") + target_index)
+    74	
+    75	    # return sample
+    76	    return Sample(
+    77	        input=record["question"],
+    78	        choices=list(choices.values()),
+    79	        target=target,
+    80	        id=record["id"],
+    81	    )

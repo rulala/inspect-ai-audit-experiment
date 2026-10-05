@@ -1,0 +1,13 @@
+:root { --ink: #20252b; --muted: #526574; --accent: #426b8c; --panel: #f3f5f7; }
+body { color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.65; }
+a { color: var(--accent); }
+#quarto-document-content { max-width: 960px; }
+h1, h2, h3 { line-height: 1.25; }
+#summary { border-left: 4px solid var(--accent); padding-left: 1.4rem; margin-bottom: 2.5rem; }
+#summary li { margin: .65rem 0; }
+hr { border: 0; border-top: 2px solid #d9dfe5; margin: 3rem 0; }
+figure { margin: 1.8rem 0; }
+figcaption, .source { font-size: .85rem; color: var(--muted); }
+.transcript { border-left: 3px solid var(--accent); padding: .8rem 1rem; margin: 1rem 0; background: var(--panel); }
+.transcript pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: .5rem 0; }
+table { font-variant-numeric: tabular-nums; }

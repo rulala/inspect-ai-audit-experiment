@@ -1,0 +1,17 @@
+
+# Secrets and local Python environment
+.env
+.env.*
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Local logs and macOS files
+logs/
+*.log
+*.eval
+.DS_Store
+
+# Extra folder created by the earlier clone
+/inspect-ai-audit-experiment/

@@ -1,0 +1,17 @@
+digraph benchmark {
+rankdir=LR; bgcolor="white"; pad=0.25; fontname="sans-serif"; fontcolor="#20252b";
+node [shape=box, style="rounded,filled", fillcolor="#f3f5f7", color="#687b8b", fontname="sans-serif", fontsize=11, margin=0.15];
+edge [color="#687b8b", fontname="sans-serif", fontsize=9];
+subgraph cluster_visible { label="Agent-visible"; style="rounded,filled"; color="#d2e1ec"; fillcolor="#edf4f9";
+"prompt" [label="Question + displayed choices + format instruction", shape=cylinder];
+"agent" [label="Model", shape=box];
+}
+"data" [label="Pinned ARC Easy test record", shape=cylinder];
+"parser" [label="multiple_choice answer parser", shape=box];
+"scorer" [label="choice scorer + accuracy", shape=box];
+"data" -> "prompt" [label="question and choice text", style=solid];
+"prompt" -> "agent" [label="single user message", style=solid];
+"agent" -> "parser" [label="completion", style=solid];
+"data" -> "scorer" [label="hidden position-normalised target", style=solid];
+"parser" -> "scorer" [label="selected choice", style=solid];
+}

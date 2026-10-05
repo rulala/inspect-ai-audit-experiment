@@ -1,0 +1,26 @@
+{
+  "repo": "https://github.com/UKGovernmentBEIS/inspect_evals.git",
+  "revision": "HEAD",
+  "paths": [
+    "src/inspect_evals/arc"
+  ],
+  "snapshot": null,
+  "source": "remote repository; clone it yourself into /workspace",
+  "task": "inspect_evals/arc_easy",
+  "overview": [
+    "Audit ARC Easy for scoring validity",
+    " answer leakage",
+    " target/scorer mismatch",
+    " and whether the recorded samples test the intended multiple-choice science capability."
+  ],
+  "paper": null,
+  "docs": [],
+  "logs": [
+    {
+      "source": "/Users/rula/inspect-project/logs/2026-10-04T13-25-42-00-00_arc-easy_HFGiKfxMaxRhdK5uCohoK5.eval",
+      "staged": "/inputs/logs/0/2026-10-04T13-25-42-00-00_arc-easy_HFGiKfxMaxRhdK5uCohoK5.eval",
+      "remote": null
+    }
+  ],
+  "budget_usd": 3
+}
